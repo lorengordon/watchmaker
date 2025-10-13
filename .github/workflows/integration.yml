@@ -46,7 +46,7 @@ jobs:
     steps:
       - name: Terrafirm integration tests
         id: terrafirm
-        uses: plus3it/terrafirm/.github/actions/test@e542672b4d5d7103cc4490989691e9f703fbd20a
+        uses: plus3it/terrafirm/.github/actions/test@7d8c8f7955bdeb0ca57e4b12a71cc09367ff24e7
         with:
           destroy-after-test: true
 
@@ -71,6 +71,6 @@ jobs:
     steps:
       - name: Terrafirm integration tests
         id: terrafirm
-        uses: plus3it/terrafirm/.github/actions/test@e542672b4d5d7103cc4490989691e9f703fbd20a
+        uses: plus3it/terrafirm/.github/actions/test@7d8c8f7955bdeb0ca57e4b12a71cc09367ff24e7
         with:
           destroy-after-test: true
