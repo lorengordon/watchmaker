@@ -1,0 +1,27 @@
+FROM rust:1.91.1-slim AS rust
+
+FROM public.ecr.aws/docker/library/almalinux:8@sha256:2d4abdee2caecd851d2d6591dfb2205ba18549bc080ad5377875c990331e41c4
+
+ARG USER=wam-builder
+ARG USER_UID
+ARG USER_GID
+
+USER root
+
+RUN if [[ ${USER_UID} -eq 0 ]] ; then adduser ${USER} ; \
+    else if ! getent group "$USER_GID" ; then groupadd --gid ${USER_GID} ${USER} ; \
+    else GROUP_NAME=$(getent group $USER_GID | awk -F':' '{print $1}') ; groupmod -n ${USER} "$GROUP_NAME" ; fi \
+    && adduser --uid ${USER_UID} --gid ${USER_GID} ${USER} ; fi
+
+RUN dnf install -y gcc make
+
+USER ${USER}
+
+ENV HOME="/home/${USER}"
+ENV PATH="${HOME}/.cargo/bin:${PATH}"
+ENV CARGO_HOME="${HOME}/.cargo"
+ENV RUSTUP_HOME="${HOME}/.rustup"
+
+# Copy Rust toolchain from rust stage
+COPY --from=rust --chown=${USER}:${USER} /usr/local/cargo ${HOME}/.cargo
+COPY --from=rust --chown=${USER}:${USER} /usr/local/rustup ${HOME}/.rustup
