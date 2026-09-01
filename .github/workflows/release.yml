@@ -67,7 +67,7 @@ jobs:
         run: mkdir -p sbom
 
       - name: Generate SBOM for release distributions
-        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26
         with:
           path: dist/
           format: spdx-json
@@ -76,7 +76,7 @@ jobs:
           upload-release-assets: false
 
       - name: Generate SBOM for standalone distributions
-        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26
         with:
           path: .pyinstaller/dist/
           format: spdx-json
